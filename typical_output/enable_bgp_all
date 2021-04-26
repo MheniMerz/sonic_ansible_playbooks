@@ -1,0 +1,63 @@
+cumulus@oob-mgmt-server:~/sonic_ansible_playbooks$ ansible-playbook playbooks/enable_bgp_all.yml 
+[WARNING]: Invalid characters were found in group names but not replaced, use
+-vvvv to see details
+
+PLAY [spine leaf] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+Monday 26 April 2021  13:44:04 +0000 (0:00:00.063)       0:00:00.064 **********
+ok: [leaf01]
+ok: [leaf04]
+ok: [spine01]
+ok: [fw1]
+ok: [fw2]
+ok: [spine03]
+ok: [leaf03]
+ok: [spine02]
+ok: [leaf02]
+ok: [spine04]
+
+TASK [enable bgp on all interfaces] ********************************************
+Monday 26 April 2021  13:44:14 +0000 (0:00:09.106)       0:00:09.170 **********
+changed: [spine04]
+changed: [fw1]
+changed: [spine03]
+changed: [spine02]
+changed: [fw2]
+changed: [leaf02]
+changed: [spine01]
+changed: [leaf01]
+changed: [leaf03]
+changed: [leaf04]
+
+TASK [save running config] *****************************************************
+Monday 26 April 2021  13:44:20 +0000 (0:00:06.094)       0:00:15.265 **********
+changed: [spine04]
+changed: [spine02]
+changed: [fw1]
+changed: [spine03]
+changed: [fw2]
+changed: [spine01]
+changed: [leaf02]
+changed: [leaf01]
+changed: [leaf04]
+changed: [leaf03]
+
+PLAY RECAP *********************************************************************
+fw1                        : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+fw2                        : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+leaf01                     : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+leaf02                     : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+leaf03                     : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+leaf04                     : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+spine01                    : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+spine02                    : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+spine03                    : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+spine04                    : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+Monday 26 April 2021  13:44:30 +0000 (0:00:09.957)       0:00:25.223 **********
+===============================================================================
+save running config ----------------------------------------------------- 9.96s
+Gathering Facts --------------------------------------------------------- 9.11s
+enable bgp on all interfaces -------------------------------------------- 6.10s
+cumulus@oob-mgmt-server:~/sonic_ansible_playbooks$
