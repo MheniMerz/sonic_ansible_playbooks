@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+          - name: enable bgp on all interfaces
+            ansible.builtin.command: config bgp startup all
+          
+          - name: save running config
+            ansible.builtin.command: config save
