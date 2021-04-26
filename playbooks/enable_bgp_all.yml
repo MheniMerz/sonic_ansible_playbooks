@@ -1,5 +1,8 @@
+
+# this playbook enables bgp on all interfaces 
+# between spine and leaf nodes
 ---
-- hosts: all
+- hosts: spine leaf
   vars:
           ansible_user: admin
           ansible_ssh_pass: YourPaSsWoRd
