@@ -8,6 +8,7 @@ border02 ansible_user=admin ansible_ssh_pass=YourPaSsWoRd
 
 [fw]
 fw1
+fw2
 
 [leaf]
 leaf01 ansible_user=admin ansible_ssh_pass=YourPaSsWoRd
@@ -28,14 +29,6 @@ server03
 server04
 server05
 server06
-
-[pod1:children]
-fw
-leaf
-clspine
-sonicspine
-border
-server
 
 [netq]
 netq-ts
