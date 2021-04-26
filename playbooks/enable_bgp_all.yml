@@ -7,4 +7,4 @@
             ansible.builtin.command: config bgp startup all
           
           - name: save running config
-            ansible.builtin.command: config save
+            ansible.builtin.command: config save -y
