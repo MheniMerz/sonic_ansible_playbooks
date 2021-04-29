@@ -1,0 +1,41 @@
+# this playbook configures a bgp neighborship
+# between the spine switches of the PNI
+---
+- hosts: pni_spine
+  vars:
+          ansible_user: admin
+          ansible_ssh_pass: YourPaSsWoRd
+  become: true
+  gather_facts: true
+  tasks:
+          - name: setup neighboring interfaces
+            command: |
+                    vtysh -c
+                    "
+                    config
+                    interface Ethernet0
+                    ip address {{item}}
+                    no shutdown
+                    end
+                    "
+            loop:
+                    - 192.168.1.1/31
+                    - 192.168.1.2/31
+          - name: configure BGP neighborship
+            command: |
+                    vtysh -c
+                    "
+                    config
+                    router-id {{item.router_id}}
+                    router bgp 65101
+                    neighbor {{item.neighbor_ip}} remote-as 65101
+                    "
+            loop:
+                    - { router_id: 1.1.1.1 , neighbor_ip: 192.168.1.2 }
+                    - { router_id: 2.2.2.2 , neighbor_ip: 192.168.1.1 }
+          - name: save running config
+            command: |
+                vtysh -c
+                "
+                write memory
+                "
