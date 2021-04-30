@@ -2,8 +2,8 @@
 ansible_user=admin
 ansible_ssh_pass=YourPaSsWoRd
 
-[bgp_as_65200]
+[bgp_as_65111]
 10.1.0.1 ansible_user=admin ansible_ssh_pass=YourPaSsWoRd
 
-[bgp_as_65300]
+[bgp_as_65222]
 10.1.0.2 ansible_user=admin ansible_ssh_pass=YourPaSsWoRd

@@ -2,11 +2,15 @@
 # between the spine switches of the PNI
 ---
 - name: bgp_r1_play
-  hosts: bgp_as_65200 
+  hosts: bgp_as_65111 
   vars:
           ansible_user: admin
           ansible_ssh_pass: YourPaSsWoRd
-          r1_vars: { eth0_ip: 192.168.1.1/32, router_id: 1.1.1.1 , neighbor_ip: 192.168.1.2, bgp_asn: 65200, neighbor_bgp_asn: 65300 }
+          eth20_ip: 192.168.1.1/32
+          router_id: 1.1.1.1
+          neighbor_ip: 192.168.1.2
+          bgp_asn: 65111
+          neighbor_bgp_asn: 65222
   become: true
   gather_facts: false
   tasks:
@@ -14,35 +18,39 @@
             command: |
                     vtysh -c
                     "
-                    config
-                    interface Ethernet0
-                    ip address {{r1_vars.eth0_ip}}
-                    no shutdown
-                    end
+                     config
+                     interface Ethernet20
+                     ip address {{eth20_ip}}
+                     no shutdown
+                     end
                     "
 
           - name: configure BGP neighborship
             command: |
                     vtysh -c
                     "
-                    config
-                    router-id {{r1_vars.router_id}}
-                    router bgp {{r1_vars.bgp_asn}}
-                    neighbor {{r1_vars.neighbor_ip}} remote-as {{r1_var.neighbor_bgp_asn}}
+                     config
+                     router-id {{router_id}}
+                     router bgp {{bgp_asn}}
+                     neighbor {{neighbor_ip}} remote-as {{neighbor_bgp_asn}}
                     "
           
           - name: save running config
             command: |
                 vtysh -c
                 "
-                write memory
+                 write memory
                 "
 - name: bgp_r2_play
-  hosts: bgp_as_65300 
+  hosts: bgp_as_65222 
   vars:
           ansible_user: admin
           ansible_ssh_pass: YourPaSsWoRd
-          r2_vars: { eth0_ip: 192.168.1.2/32, router_id: 2.2.2.2 , neighbor_ip: 192.168.1.1, bgp_asn: 65300, neighbor_bgp_asn: 65200 }
+          eth20_ip: 192.168.1.2/32
+          router_id: 2.2.2.2
+          neighbor_ip: 192.168.1.1
+          bgp_asn: 65222
+          neighbor_bgp_asn: 65111
   become: true
   gather_facts: false
   tasks:
@@ -51,8 +59,8 @@
                     vtysh -c
                     "
                     config
-                    interface Ethernet0
-                    ip address {{r2_vars.eth0_ip}}
+                    interface Ethernet20
+                    ip address {{eth20_ip}}
                     no shutdown
                     end
                     "
@@ -62,9 +70,9 @@
                     vtysh -c
                     "
                     config
-                    router-id {{r2_vars.router_id}}
-                    router bgp {{r2_vars.bgp_asn}}
-                    neighbor {{r2_vars.neighbor_ip}} remote-as {{r2_var.neighbor_bgp_asn}}
+                    router-id {{router_id}}
+                    router bgp {{bgp_asn}}
+                    neighbor {{neighbor_ip}} remote-as {{neighbor_bgp_asn}}
                     "
           
           - name: save running config
