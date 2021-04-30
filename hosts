@@ -2,8 +2,10 @@
 ansible_user=admin
 ansible_ssh_pass=YourPaSsWoRd
 
-[border]
+[bgp_as_65200]
 border01 ansible_user=admin ansible_ssh_pass=YourPaSsWoRd
+
+[bgp_as_65300]
 border02 ansible_user=admin ansible_ssh_pass=YourPaSsWoRd
 
 [fw]

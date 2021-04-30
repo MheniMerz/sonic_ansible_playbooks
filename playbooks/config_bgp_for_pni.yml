@@ -1,38 +1,66 @@
 # this playbook configures a bgp neighborship
 # between the spine switches of the PNI
 ---
-- hosts: pni_spine
+- hosts: bgp_as_65200 
   vars:
           ansible_user: admin
           ansible_ssh_pass: YourPaSsWoRd
+          r1_vars: { eth0_ip: 192.168.1.1/32, router_id: 1.1.1.1 , neighbor_ip: 192.168.1.2, bgp_asn: 65200, neighbor_bgp_asn: 65300 }
   become: true
-  gather_facts: true
+  gather_facts: false
   tasks:
-          - name: setup neighboring interfaces
+          - name: setup bgp interface
             command: |
                     vtysh -c
                     "
                     config
                     interface Ethernet0
-                    ip address {{item}}
+                    ip address {{r1_vars.eth0_ip}}
                     no shutdown
                     end
                     "
-            loop:
-                    - 192.168.1.1/31
-                    - 192.168.1.2/31
           - name: configure BGP neighborship
             command: |
                     vtysh -c
                     "
                     config
-                    router-id {{item.router_id}}
-                    router bgp 65101
-                    neighbor {{item.neighbor_ip}} remote-as 65101
+                    router-id {{r1_vars.router_id}}
+                    router bgp {{r1_vars.bgp_asn}}
+                    neighbor {{r1_vars.neighbor_ip}} remote-as {{r1_var.neighbor_bgp_asn}}
                     "
-            loop:
-                    - { router_id: 1.1.1.1 , neighbor_ip: 192.168.1.2 }
-                    - { router_id: 2.2.2.2 , neighbor_ip: 192.168.1.1 }
+          - name: save running config
+            command: |
+                vtysh -c
+                "
+                write memory
+                "
+- hosts: bgp_as_65300 
+  vars:
+          ansible_user: admin
+          ansible_ssh_pass: YourPaSsWoRd
+          r2_vars: { eth0_ip: 192.168.1.2/32, router_id: 2.2.2.2 , neighbor_ip: 192.168.1.1, bgp_asn: 65300, neighbor_bgp_asn: 65200 }
+  become: true
+  gather_facts: false
+  tasks:
+          - name: setup bgp interface
+            command: |
+                    vtysh -c
+                    "
+                    config
+                    interface Ethernet0
+                    ip address {{r2_vars.eth0_ip}}
+                    no shutdown
+                    end
+                    "
+          - name: configure BGP neighborship
+            command: |
+                    vtysh -c
+                    "
+                    config
+                    router-id {{r2_vars.router_id}}
+                    router bgp {{r2_vars.bgp_asn}}
+                    neighbor {{r2_vars.neighbor_ip}} remote-as {{r2_var.neighbor_bgp_asn}}
+                    "
           - name: save running config
             command: |
                 vtysh -c
