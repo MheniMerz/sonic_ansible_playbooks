@@ -1,6 +1,6 @@
 
 ##### Topology
-![topology](pni_bgp.png)
+![topology](bgp_toplogy.png)
 
 ##### how to run
 
