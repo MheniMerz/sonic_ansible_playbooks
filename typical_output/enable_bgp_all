@@ -61,3 +61,4 @@ save running config ----------------------------------------------------- 9.96s
 Gathering Facts --------------------------------------------------------- 9.11s
 enable bgp on all interfaces -------------------------------------------- 6.10s
 cumulus@oob-mgmt-server:~/sonic_ansible_playbooks$
+cumulus@oob-mgmt-server:~/sonic_ansible_playbooks$
