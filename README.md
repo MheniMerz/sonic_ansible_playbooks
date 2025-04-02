@@ -7,7 +7,7 @@ this playbook enables bgp on all interfaces of the spine and leaf nodes, it has 
 1. enabling bgp
 2. saving the running config
 
-by running `ansible-playbook playbooks/enable_bgp_all.yml` the tasks are ran on all the hosts of category `spine` and `leaf` (see the [hosts file](hosts))
+by running `ansible-playbook playbooks/enable_bgp_all.yml` the tasks are ran on all the hosts of category `spine` and `leaf` (see the [hosts file](nvidia_playground_config/hosts))
 
 ![ansible_diagram](img/ansible_diagram.png)
 
